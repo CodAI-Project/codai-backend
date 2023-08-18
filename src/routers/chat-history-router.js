@@ -66,24 +66,24 @@ router.patch(
         const { chatId } = req.params
         const { title, userId } = req.body
 
-        console.log(chatId)
         const chat = await FirestoreModel.getChatsUsingChatId(chatId);
 
-        if (!chat) {
-            return res.status(404).json({ message: "Chat não encontrado" });
+        if (!chat.data?.history) {
+            return res.status(chat.status).json(chat);
         }
 
         const hasPermission = await FirestoreModel.checkUserChatPermission(chat, userId)
 
-        console.log('hasPermission', hasPermission)
-        if (!hasPermission) {
-            return res.json(new Response(403, "Forbidden", null, []));
+        if (hasPermission === true) {
+
+            const result = await FirestoreModel.patchTitleChat(chatId, title);
+
+            return res.status(result.status).json(result);
         }
 
+        return res.status(hasPermission.status).json(hasPermission);
 
-        const result = await FirestoreModel.patchTitleChat(chatId, title);
 
-        return res.status(result.status).json(result);
 
     }
 

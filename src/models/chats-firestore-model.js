@@ -106,7 +106,10 @@ class FirestoreModel {
 
 
     static async checkUserChatPermission(chatsObject, userId) {
-        return chatsObject.userId === userId;
+        if (chatsObject.data.userId === userId) {
+            return true
+        }
+        return new Response(status.FORBIDDEN, null, 'not permited', []);
     }
 }
 

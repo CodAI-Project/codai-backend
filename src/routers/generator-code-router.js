@@ -1,18 +1,25 @@
 import express from "express";
 import { body, validationResult } from "express-validator";
-import ProcessAIModel from "../models/process-code.js";
+import ProcessAIModel from "../models/process-code-model.js";
 
 const router = express.Router();
 
 router.post(
   "/code-openai",
   [
-    body("answer").notEmpty().withMessage("O campo 'answer' é obrigatório"),
+    body("ask").notEmpty().withMessage("O campo 'ask' é obrigatório"),
     body("template").notEmpty().withMessage("O campo 'template' é obrigatório"),
     body("userId").notEmpty().withMessage("O campo 'userId' é obrigatório"),
-    body("chatId").notEmpty().withMessage("O campo 'chatId' é obrigatório"),
+    body("chatId")
+      .custom((value, { req }) => {
+        if (value === null) {
+          return true;
+        }
+        return !!value;
+      })
+      .withMessage("O campo 'chatId' deve ser enviado"),
   ],
-  async (req, res) => {
+  async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -22,7 +29,6 @@ router.post(
       const response = await ProcessAIModel.generateAnswerOpenAI(req);
       return res.json(response);
     } catch (error) {
-      // Aqui você pode tratar qualquer erro que ocorra na função generateAnswerBard
       console.error(error);
       return res.status(500).json({ message: "Erro interno do servidor" });
     }

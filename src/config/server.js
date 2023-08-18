@@ -6,7 +6,9 @@ const server = express();
 
 server.use(cors());
 server.use(express.json());
-routes(server);
 
+
+
+routes(server);
 
 export default server;

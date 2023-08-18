@@ -1,8 +1,7 @@
-import generatorCodeRouter from "../routers/generator-code-router.js";
+import resource from './resources.js'
 
-const setupRoutes = (server) => {
-  server.use("/", generatorCodeRouter);
-  server.use("/code", generatorCodeRouter);
+export default server => {
+  server.use("/", resource);
 };
 
-export default setupRoutes;
+

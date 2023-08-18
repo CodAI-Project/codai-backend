@@ -7,7 +7,8 @@ class ChatHistory {
     }
 
 
-      
+    
+
     static toFirestoreObjectUpdate(history, lastModified ) {
         return {
             history: history,

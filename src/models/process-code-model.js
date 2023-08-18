@@ -2,6 +2,7 @@ import Response from '../types/Response.js';
 import db from '../config/firestore.js';
 import OpenAIService from '../services/openai-service.js';
 import ChatHistory from '../database/strategies/firestore/schemas/chat-history-schema.js';
+import status from 'http-status-codes'
 
 const collection = 'chat-history'
 
@@ -17,7 +18,7 @@ class ProcessAIModel {
             console.timeEnd('conversationHistory')
 
             if (conversationHistory.userId !== userId) {
-                return new Response(403, "Forbidden", "O usuario não tem acesso a esse chat", []);
+                return new Response(status.FORBIDDEN, "Forbidden", "O usuario não tem acesso a esse chat", []);
             }
 
             if (!conversationHistory.history.length) {
@@ -39,9 +40,9 @@ class ProcessAIModel {
             console.time('updateHistory')
             await this.updateConversationHistory(userId, conversationHistory.chatId, conversation,);
             console.timeEnd('updateHistory')
-            return new Response(200, null, 'Sucess', assistantResponse);
+            return new Response(status.OK, null, 'Sucess', assistantResponse);
         } catch (e) {
-            throw new Response(400, "Bad Request", e, null);
+            throw new Response(status.BAD_REQUEST, "Bad Request", e, null);
         }
     }
 
@@ -66,7 +67,7 @@ class ProcessAIModel {
 
             if (!chatId) {
                 newChatId = docRef.id;
-            }else{
+            } else {
                 newChatId = chatId
             }
 
@@ -74,11 +75,12 @@ class ProcessAIModel {
 
             if (doc.exists) {
                 // Retornando sempre os últimos 12
+
                 chatHistory = new ChatHistory(
                     doc.data().history.slice(-12),
                     doc.data.title,
                     Date.now(),
-                    doc.data.userId)
+                    doc.data().userId)
 
                 chatHistory = { chatId: newChatId, ...chatHistory }
 

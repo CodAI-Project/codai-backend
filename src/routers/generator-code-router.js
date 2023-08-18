@@ -25,13 +25,10 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    try {
+
       const response = await ProcessAIModel.generateAnswerOpenAI(req);
-      return res.json(response);
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: "Erro interno do servidor" });
-    }
+      return res.status(response.status).json(response);
+  
   }
 );
 

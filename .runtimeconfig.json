@@ -1,0 +1,9 @@
+{
+  "node": {
+    "env": "development",
+    "npl": {
+      "openai_key": "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",
+      "bard": "ZwidfWB4nOBqOU2J8Q0OH-5NpxZ-Mb5399kKevZypOpgp1ni1b7BWMOPSX_yklW3RI9QSw."
+    }
+  }
+}

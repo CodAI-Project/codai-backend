@@ -1,16 +1,15 @@
+import Response from '../types/Response';
+import functions from 'firebase-functions';
+
 const middleware = 'REQUEST-MIDDLWARE';
 
-const status = require('http-status-code')
-const Response = require('../types/Response')
-const functions = require('firebase-functions')
-
-module.exports = result => (result, req, res, next) => {
+export default (result) => async (req, res, next) => {
     const hasBusinessResponse = result instanceof Response;
-    const responseBody = hasBusinessResponse ? result : result ? result.toString() : status.getStatusText(500);
-    const responseStatus = hasBusinessResponse ? result.status : status.INTERNAL_SERVER_ERROR
+    const responseBody = hasBusinessResponse ? result : result ? result.toString() : 500;
 
     if (result instanceof Error) {
-        functions.logger.error(`[${middleware}] REPORT ERROR`, result)
+        functions.logger.error(`[${middleware}] REPORT ERROR`, result);
     }
-    res.status(responseStatus).json(responseBody)
-}
+    
+    res.status(responseStatus).json(responseBody);
+};

@@ -1,7 +1,8 @@
-const routers = require("../routers/sessao-router");
+import generatorCodeRouter from "../routers/generator-code-router.js";
 
-
-module.exports = (server) => {
-  server.use("/", routers),
-  server.use("/codai", routers);
+const setupRoutes = (server) => {
+  server.use("/", generatorCodeRouter);
+  server.use("/code", generatorCodeRouter);
 };
+
+export default setupRoutes;

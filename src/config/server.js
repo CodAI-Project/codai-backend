@@ -4,10 +4,13 @@ import routes from "./routes.js";
 
 const server = express();
 
-server.use(cors());
+server.use(cors({
+    origin: true
+}));
+
+
+
 server.use(express.json());
-
-
 
 routes(server);
 

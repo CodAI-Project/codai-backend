@@ -68,7 +68,7 @@ class FirestoreModel {
             return new Response(status.INTERNAL_SERVER_ERROR, null, 'Service error', error);
         }
     }
-    
+
     static async patchTitleChat(chatId, title) {
         try {
             const chatDocRef = FirestoreModel.chatHistoryCollection.doc(chatId);
@@ -80,7 +80,11 @@ class FirestoreModel {
 
             await chatDocRef.update({ title });
 
-            return new Response(status.OK, null, 'Success', null);
+            const chatAtt = await FirestoreModel.getChatsUsingChatId(chatId)
+
+          
+
+            return new Response(status.OK, null, 'Success', chatAtt.data);
         } catch (error) {
             console.error('Error', error);
             return new Response(status.INTERNAL_SERVER_ERROR, null, 'Service error', error);

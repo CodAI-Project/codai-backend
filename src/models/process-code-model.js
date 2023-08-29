@@ -6,16 +6,13 @@ import status from 'http-status-codes'
 
 const collection = 'chat-history'
 
-
 class ProcessAIModel {
 
     static async generateAnswerOpenAI(req) {
         const { userId, chatId, ask, template } = req.body;
         let content = null
         try {
-            console.time('conversationHistory')
             const conversationHistory = await this.getConversationHistory(chatId, userId);
-            console.timeEnd('conversationHistory')
 
             if (conversationHistory.userId !== userId) {
                 return new Response(status.FORBIDDEN, "Forbidden", "O usuario não tem acesso a esse chat", []);
@@ -31,16 +28,20 @@ class ProcessAIModel {
             let conversation = this.buildConversation(content, conversationHistory.history, ask);
 
 
-            console.time('responseOpenAI')
             const responsePrompt = await OpenAIService.generateResponseFromAPI(conversation);
-            console.timeEnd('responseOpenAI');
             const assistantResponse = responsePrompt.choices[0].message.content;
 
+
+
             conversation = this.buildConversation(content, conversationHistory.history, ask, assistantResponse);
-            console.time('updateHistory')
-            await this.updateConversationHistory(userId, conversationHistory.chatId, conversation,);
-            console.timeEnd('updateHistory')
-            return new Response(status.OK, null, 'Sucess', assistantResponse);
+            const chat = await this.updateConversationHistory(userId, conversationHistory.chatId, conversation,);
+
+            const response = {
+                chat: chat,
+                lastAwnser: assistantResponse
+            }
+
+            return new Response(status.OK, null, 'Sucess', response);
         } catch (e) {
             throw new Response(status.BAD_REQUEST, "Bad Request", e, null);
         }
@@ -74,10 +75,8 @@ class ProcessAIModel {
             let chatHistory;
 
             if (doc.exists) {
-                // Retornando sempre os últimos 12
-
                 chatHistory = new ChatHistory(
-                    doc.data().history.slice(-12),
+                    doc.data().history.slice(-6),
                     doc.data.title,
                     Date.now(),
                     doc.data().userId)
@@ -111,12 +110,23 @@ class ProcessAIModel {
         try {
             const chatDocRef = db.collection('chat-history').doc(chatId);
             await chatDocRef.update(chatFireStoreUpdate);
+            const chatUpdated = await chatDocRef.get()
+
 
             const userDocRef = db.collection('user-chat').doc(userId);
             await userDocRef.set(
                 { chats: { [chatId]: chatDocRef } },
                 { merge: true }
             );
+
+            const responseUpdate = {
+                id: chatId,
+                userId: userId,
+                title: chatUpdated.data().title,
+                history: chatUpdated.data().history.slice(-12)
+            }
+
+            return responseUpdate
         } catch (error) {
             console.error('Error ao realizar update:', error);
         }
@@ -143,27 +153,46 @@ class ProcessAIModel {
     static async firstPrompt(ask, template) {
 
         return `
-                Crie um objeto com as informações necessárias para configurar um projeto de aplicativo. O objeto deve ter a seguinte estrutura:
+        **Instrução:** 
 
-                A estrutura deve retornar no padrão ${template}
-
-            {
-                "files": {
-                    "index.html": "<!DOCTYPE html>\\n<html>\\n<head>\\n<title>My App</title>\\n</head>\\n<body>\\n<h1>Hello World</h1>\\n<script src=\\"index.js\\"></script>\\n</body>\\n</html>",
-                    "index.js": "alert('Hello World');"
-                    // Inclua outros arquivos necessários aqui
-                    // Cada objeto aqui dentro recebe primeiro o nome do arquivo e o valor é o conteúdo do arquivo
-                },
-                "title": "Título do App",
-                "description": "Descrição do que este aplicativo faz e como executá-lo. Coloque uma marca no topo escrito 'CodAI Generator'.",
-                "template": ${template}"
-            }
-
-                Certifique-se de incluir todos os arquivos necessários para fazer o projeto funcionar em um editor sem erros. Preencha os campos 'title' e 'description' com informações adequadas.
-
-                **Exemplo de Uso:**
-                Se eu mandar a seguinte pergunta: ${ask}, gere o objeto conforme as instruções acima.
-
+        Você é um gerador de template de react e deve fazer um template de acordo com o qual o usuario solicitou, faça tudo com boas práticas e tudo que vc importar no componente deve existir, siga as boas práticas e realize tudo o qual o usuario pedir
+        
+        ** Requisitos **
+        
+        -Não se esqueça de importar tudo que usar, pois se nao realizar isso ele da erro no editor, pois esse objeto deve ser capaz de funcionar no stackbliz,  e deve retornar exatamente o objeto solicitado pois se não dará erro e o usuario não vai gostar da sua utlização
+        
+        -Tudo deve ser resposivo pois se não o usuario não vai gostar de utilizar a plataforma
+        
+        -No atributo "title" e "description" vc deve realizar o preechimento tambem de acordo com oq o usuario solicitou, atenção aos detalhes e seja bem caprichoso
+        
+        -Não utilize template strings acentos pois eles quebram o codigo, e por favor, retorne apenas o objeto, nunca retorne frases explicando o codigo, apenas o objeto com o que foi solicitado
+        
+        NÂO ESQUEÇA DOS IMPORTES NA ROTAS TBM
+        
+        O objeto deve ser a unica coisa a ser retornada
+        
+        **  O que retornar?**
+        
+        Apenas o objeto usado de exemplo logo abaixo
+        {
+          "files": {
+            "src/index.js": "",
+            "src/App.js": "",
+            "public/index.html": "",
+            "package.json": ""
+          },
+          "title": "",
+          "description": "",
+          "template": "create-react-app",
+          "dependencies": {
+            "react": "^17.0.2",
+            "react-dom": "^17.0.2",
+            "react-router-dom": "^5.3.0"
+          }
+        }
+        
+        **SOLICITAÇÃO DO USUARIO ABAIXO**
+       ${ask}
                 
                 `;
     }

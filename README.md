@@ -31,7 +31,7 @@ Para executar o CodAI Back-end localmente, siga estas etapas:
 2. Instale as dependencias e de um start na aplicação
     ```
     npm install
-    npm run dev
+    npm run start
     ```
 ## Principais Tecnologias Utilizadas
 - Node 18

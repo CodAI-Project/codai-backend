@@ -23,6 +23,10 @@ O CodAI Backend oferece uma série de recursos essenciais que impulsionam a func
 ## Como Executar Localmente
 Para executar o CodAI Back-end localmente, siga estas etapas:
 
+**Observações:** 
+Como o projeto usa Firebase, você deve estar logado no firebase via cli na sua maquina pra conseguir usar o projeto. ele será instanciado na sua maquina com as suas credenciais.
+  
+
 1. Clone o repositório:
    ```
    git clone https://github.com/CodAI-Project/codai-backend.git
@@ -31,21 +35,40 @@ Para executar o CodAI Back-end localmente, siga estas etapas:
 2. Instale as dependencias e de um start na aplicação
     ```
     npm install
+    ```
+
+**Criando runtime no seu console e com o firebase logado, siga os passos abaixo.**
+
+3. Setando variavel na runtime da openAI:
+   ```
+   firebase functions:config:set node.npl.openai_key="sua chave openai aqui"
+    ```
+4. Setando variavel na runtime do bard:
+   ```
+   firebase functions:config:set node.npl.bard="sua chave openai aqui"
+    ```
+5. Deployando suas variaveis:
+   ```
+   npm run deploy:dev
+    ```
+6. Configurando a runtime:
+   ```
+   npm run import-runtime
+    ```
+7. Inicializando a aplicação localmente
+    ```
     npm run start
     ```
+## Swagger para utilização.
+ Necessário token de autenticação. obtido diretamente no Front-end no console do navegador (paliativo)
+ Link do Swagger [aqui](https://app.swaggerhub.com/apis-docs/LUANSSRR/CodAI/1.0.0-oas3).
+ 
 ## Principais Tecnologias Utilizadas
 - Node 18
 - Ecosistema Firebase
 - Integração com ChatGPT API
 - Express
 - Axios
-
-
-
-## Swagger para utilização.
- Necessário token de autenticação. obtido diretamente no Front-end no console do navegador (paliativo)
- Link do Swagger [aqui](https://app.swaggerhub.com/apis-docs/LUANSSRR/CodAI/1.0.0-oas3).
- 
 
 ## Arquitetura
 ![Desenho da arquitetura](https://firebasestorage.googleapis.com/v0/b/codai-development.appspot.com/o/codai-arquitetura-CodAI.drawio.png?alt=media&token=8098019e-2bd0-4f2e-b604-ba9338a22e91)

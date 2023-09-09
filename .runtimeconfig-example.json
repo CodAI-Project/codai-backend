@@ -1,0 +1,9 @@
+{
+    "node": {
+        "env": "development",
+        "npl": {
+          "openai_key": "sua chave aqui",
+          "bard": "sua chave bard aqui"
+        }
+      }
+}

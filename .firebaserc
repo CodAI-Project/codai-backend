@@ -2,6 +2,6 @@
   "projects": {
     "default": "codai-development",
     "dev": "codai-development",
-    "prod": "codai-prod"
+    "prod": "codai-production"
   }
 }

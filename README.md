@@ -1,7 +1,7 @@
 # CodAI (Back-end)
 
 ## Demonstração
-Link para o prototipo deployado [aqui](https://codai-hub-development.web.app/).
+Link para o prototipo deployado [aqui](https://codai-hub.web.app/).
 
 ## Visão Geral
 O CodAI Backend é a espinha dorsal da plataforma CodAI, responsável por gerenciar, armazenar e fornecer acesso aos dados essenciais para a funcionalidade da aplicação. Este componente é vital para o funcionamento do sistema, possibilitando a criação, leitura, atualização e exclusão de informações relacionadas ao desenvolvimento de código.

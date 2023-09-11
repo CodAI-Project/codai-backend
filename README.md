@@ -1,7 +1,10 @@
 # CodAI (Back-end)
 
-## Demonstração
-Link para o prototipo deployado [aqui](https://codai-hub.web.app/).
+
+## Demonstração explicada em video
+- [Video Demonstrativo](https://youtu.be/IDMh8szqQa4)
+
+**Visite nosso site:**  [CodAI-hub](https://codai-hub.web.app/)
 
 ## Visão Geral
 O CodAI Backend é a espinha dorsal da plataforma CodAI, responsável por gerenciar, armazenar e fornecer acesso aos dados essenciais para a funcionalidade da aplicação. Este componente é vital para o funcionamento do sistema, possibilitando a criação, leitura, atualização e exclusão de informações relacionadas ao desenvolvimento de código.
@@ -72,4 +75,14 @@ Como o projeto usa Firebase, você deve estar logado no firebase via cli na sua 
 
 ## Arquitetura
 ![Desenho da arquitetura](https://firebasestorage.googleapis.com/v0/b/codai-development.appspot.com/o/codai-arquitetura-CodAI.drawio.png?alt=media&token=8098019e-2bd0-4f2e-b604-ba9338a22e91)
+
+
+## Repositórios Subjacentes
+
+O sucesso do CodAI não seria possível sem a colaboração de diversos repositórios subjacentes que desempenham um papel fundamental em seu funcionamento. Abaixo estão alguns dos repositórios mais importantes que contribuem para o desenvolvimento e aprimoramento contínuo do CodAI:
+
+- **[codai-frontend](https://github.com/CodAI-Project/codai-frontend.git)**: Repositorio do backend do projeto, onde está o coração da aplicação.
+
+
+Lembramos que esses repositórios subjacentes são essenciais para o funcionamento do CodAI e representam nossa comunidade de desenvolvedores comprometidos em tornar a plataforma ainda mais poderosa e eficiente.
 

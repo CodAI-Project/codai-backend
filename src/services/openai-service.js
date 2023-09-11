@@ -9,7 +9,7 @@ class OpenAIService {
             'https://api.openai.com/v1/chat/completions',
             {
                 messages: conversation,
-                model: 'gpt-3.5-turbo',
+                model: 'gpt-3.5-turbo-16k',
                 temperature: 0
             },
             {

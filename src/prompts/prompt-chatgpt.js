@@ -58,6 +58,8 @@ export function generatorUsingHistoryPrompt(ask) {
           
           ajuste o objeto e mande novamente, mude só o atributo de files 
 
+          ***ATENÇÃO, NÃO RETORNE NADA ALEM DO OBJETO. POIS ISSO QUEBRA O CODIGO ***
+
           modificações solicitadas pelo usuario: ${ask}
 
           `

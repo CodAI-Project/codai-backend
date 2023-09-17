@@ -11,14 +11,17 @@ class FirestoreModel {
             const userDocRef = FirestoreModel.userChatCollection.doc(userId);
             const userDoc = await userDocRef.get();
 
+            
+
             if (!userDoc.exists) {
-                return new Response(status.BAD_REQUEST, null, 'Not Found', []);
+                return new Response(status.NOT_FOUND, null, 'Not Found', []);
             }
 
             const userData = userDoc.data();
+
             const chats = userData.chats || {};
             const chatIds = Object.keys(chats);
-
+            
             const chatInfoPromises = chatIds.map(async chatId => {
                 const chatDocRef = FirestoreModel.chatHistoryCollection.doc(chatId);
                 const chatDoc = await chatDocRef.get();

@@ -80,18 +80,21 @@ class ProcessAIModel {
                     doc.data().history.slice(-6),
                     doc.data.title,
                     Date.now(),
-                    doc.data().userId)
+                    doc.data().userId,
+                    doc.data().editor
+                    )
 
                 chatHistory = { chatId: newChatId, ...chatHistory }
 
                 return chatHistory
             } else {
-                chatHistory = new ChatHistory([], '', Date.now(), userId);
+                chatHistory = new ChatHistory([], '', Date.now(), userId, '');
                 await docRef.set({
                     history: chatHistory.history,
                     title: chatHistory.title,
                     userId: chatHistory.userId,
-                    lastModified: chatHistory.lastModified
+                    lastModified: chatHistory.lastModified,
+                    editor: chatHistory.editor
                 });
 
                 chatHistory = { chatId: newChatId, ...chatHistory }

@@ -94,6 +94,52 @@ class FirestoreModel {
         }
     }
 
+
+     static async patchTitleChat(chatId, title) {
+        try {
+            const chatDocRef = FirestoreModel.chatHistoryCollection.doc(chatId);
+            const chatDoc = await chatDocRef.get();
+
+            if (!chatDoc.exists) {
+                return new Response(status.NOT_FOUND, null, 'Not Found', []);
+            }
+
+            await chatDocRef.update({ title });
+
+            const chatAtt = await FirestoreModel.getChatsUsingChatId(chatId)
+
+          
+
+            return new Response(status.OK, null, 'Success', chatAtt.data);
+        } catch (error) {
+            console.error('Error', error);
+            return new Response(status.INTERNAL_SERVER_ERROR, null, 'Service error', error);
+        }
+    }
+    
+
+    static async patchEditorChat(chatId, editor) {
+        try {
+            const chatDocRef = FirestoreModel.chatHistoryCollection.doc(chatId);
+            const chatDoc = await chatDocRef.get();
+
+            if (!chatDoc.exists) {
+                return new Response(status.NOT_FOUND, null, 'Not Found', []);
+            }
+
+            await chatDocRef.update({ editor });
+
+            const chatAtt = await FirestoreModel.getChatsUsingChatId(chatId)
+
+          
+
+            return new Response(status.OK, null, 'Success', chatAtt.data);
+        } catch (error) {
+            console.error('Error', error);
+            return new Response(status.INTERNAL_SERVER_ERROR, null, 'Service error', error);
+        }
+    }
+
     static async deleteChat(chatId) {
         try {
             const chatDocRef = FirestoreModel.chatHistoryCollection.doc(chatId);

@@ -32,10 +32,10 @@ export function firstPrompt(ask, template) {
       "description": "",
       "template": "${template}",
       "dependencies": {
-        "@types/react": "18.2.21",
-        "@types/react-dom": "18.2.7",
         "react": "18.2.0",
-        "react-dom": "18.2.0"
+        "react-dom": "18.2.0",
+        "react-scripts": "5.0.1",
+        "react-router-dom": "6.6.2"
       }
     }
     
@@ -45,11 +45,7 @@ export function firstPrompt(ask, template) {
             `;
 }
 
-
-
-
 export function generatorUsingHistoryPrompt(ask) {
-
   return `
           Levando em consideração as ultimas conversas do usuario, e a solicitação do sistema
 
@@ -63,6 +59,5 @@ export function generatorUsingHistoryPrompt(ask) {
 
           modificações solicitadas pelo usuario: ${ask}
 
-          `
-
+          `;
 }

@@ -9,7 +9,7 @@ export const codai = functions
   .runWith({
     timeoutSeconds: 60,
     memory: '256MB',
-    minInstances: 1,
+    minInstances: 2,
     maxInstances: 10,
     ingressSettings: 'ALLOW_ALL'
   }).https.onRequest(async (req, res) => {

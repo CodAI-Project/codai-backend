@@ -9,6 +9,7 @@
   "scripts": {
     "import-runtime": "firebase functions:config:get --project prod > .runtimeconfig.json",
     "start": "firebase emulators:start --only functions:codai --project dev",
+    "start:prod": "firebase emulators:start --only functions:codai --project prod",
     "shell": "firebase functions:shell",
     "deploy:dev": "firebase deploy --only functions:codai --project dev",
     "deploy:prod": "firebase deploy --only functions:codai --project prod",

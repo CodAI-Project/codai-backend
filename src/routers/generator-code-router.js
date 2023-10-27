@@ -25,7 +25,6 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-
       const response = await ProcessAIModel.generateAnswerOpenAI(req);
       return res.status(response.status).json(response);
   

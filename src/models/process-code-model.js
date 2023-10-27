@@ -29,9 +29,11 @@ class ProcessAIModel {
             let conversation = this.buildConversation(content, conversationHistory.history, ask);
 
 
+            console.time("openAI")
+            console.log("Chegou aq")
             const responsePrompt = await OpenAIService.generateResponseFromAPI(conversation);
             const assistantResponse = responsePrompt.choices[0].message.content;
-
+            console.timeEnd("openAI")
 
 
             conversation = this.buildConversation(content, conversationHistory.history, ask, assistantResponse);

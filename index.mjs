@@ -7,9 +7,9 @@ const corsHandler = cors({ origin: true });
 export const codai = functions
   .region("southamerica-east1")
   .runWith({
-    timeoutSeconds: 60,
+    timeoutSeconds: 350,
     memory: '256MB',
-    minInstances: 2,
+    minInstances: 1,
     maxInstances: 10,
     ingressSettings: 'ALLOW_ALL'
   }).https.onRequest(async (req, res) => {

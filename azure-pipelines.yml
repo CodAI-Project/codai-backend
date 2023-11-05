@@ -25,5 +25,5 @@ steps:
 - script: |
     echo '$(FIREBASE_SERVICE_ACCOUNT_KEY)' > key.json
     export GOOGLE_APPLICATION_CREDENTIALS=$(System.DefaultWorkingDirectory)/key.json
-    npm run deploy:$(APP_ENV)
+    firebase deploy --token $FIREBASE_TOKEN -P $(APP_ENV)
   displayName: 'Deploy on firebase $(APP_ENV)'

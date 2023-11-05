@@ -19,14 +19,11 @@ steps:
   displayName: 'NPM Install dependecies'
   
 - script: |
-    echo '$(FIREBASE_SERVICE_ACCOUNT_KEY)' > key.json
-    export GOOGLE_APPLICATION_CREDENTIALS=$(System.DefaultWorkingDirectory)/key.json
-  displayName: 'Setup project Firebase'
-
-- script: |
      echo '$(FIREBASE_RUNTIMECONFIG)' > .runtimeconfig.json
   displayName: 'GET runtimeconfig'
 
 - script: |
+    echo '$(FIREBASE_SERVICE_ACCOUNT_KEY)' > key.json
+    export GOOGLE_APPLICATION_CREDENTIALS=$(System.DefaultWorkingDirectory)/key.json
     npm run deploy:$(APP_ENV)
   displayName: 'Deploy on firebase $(APP_ENV)'

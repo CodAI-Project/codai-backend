@@ -1,15 +1,11 @@
 parameters:
-  - name: EnvName
-    displayName: EnvName
-    type: string
-    default: A
-    values:
-    - A
-    - B
-    - C
-    - D
-    - E
-    - F
+- name: Environment
+  displayName: 'Select Environment'
+  type: string
+  default: 'dev'
+  values:
+    - 'dev'
+    - 'prod'
 
 trigger:
 - main
@@ -24,19 +20,19 @@ steps:
 - task: NodeTool@0
   inputs:
     versionSpec: '18.17.0'
-  displayName: 'Install Node.js'
+    displayName: 'Install Node.js'
 
 - script: |
     npm install -g firebase-tools
     npm install
-  displayName: 'NPM Install dependecies'
-  
+  displayName: 'NPM Install dependencies'
+
 - script: |
-     echo '$(FIREBASE_RUNTIMECONFIG)' > .runtimeconfig.json
+    echo '$(FIREBASE_RUNTIMECONFIG)' > .runtimeconfig.json
   displayName: 'GET runtimeconfig'
 
 - script: |
     echo '$(FIREBASE_SERVICE_ACCOUNT_KEY)' > key.json
     export GOOGLE_APPLICATION_CREDENTIALS=$(System.DefaultWorkingDirectory)/key.json
-    npm run deploy:$(APP_ENV)
-  displayName: 'Deploy on firebase $(APP_ENV)'
+    npm run deploy:$(Environment)
+  displayName: 'Deploy on firebase $(Environment)'

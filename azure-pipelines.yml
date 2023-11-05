@@ -33,7 +33,7 @@ steps:
 - script: |
     echo '$(FIREBASE_SERVICE_ACCOUNT_KEY)' > key.json
     export GOOGLE_APPLICATION_CREDENTIALS=$(System.DefaultWorkingDirectory)/key.json
-    npm run import_runtime:$(APP_ENV)
+    npm run import-runtime:$(APP_ENV)
   displayName: 'GET runtimeconfig'
 
 - script: |

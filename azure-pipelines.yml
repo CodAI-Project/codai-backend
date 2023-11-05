@@ -31,7 +31,9 @@ steps:
   displayName: 'NPM Install dependencies'
 
 - script: |
-    echo '$(FIREBASE_RUNTIMECONFIG)' > .runtimeconfig.json
+    echo '$(FIREBASE_SERVICE_ACCOUNT_KEY)' > key.json
+    export GOOGLE_APPLICATION_CREDENTIALS=$(System.DefaultWorkingDirectory)/key.json
+    npm run import_runtime:$(APP_ENV)
   displayName: 'GET runtimeconfig'
 
 - script: |

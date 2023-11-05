@@ -20,12 +20,12 @@ steps:
 
 
 - script: |
-    firebase functions:config:get --project ${APP_ENV} > .runtimeconfig.json
+    firebase functions:config:get --project '$(APP_ENV)' > .runtimeconfig.json
   displayName: 'get runtime'
 
 
 - script: |
     echo '$(FIREBASE_SERVICE_ACCOUNT_KEY)' > key.json
     export GOOGLE_APPLICATION_CREDENTIALS=$(System.DefaultWorkingDirectory)/key.json
-    npm run deploy:'${APP_ENV}'
-  displayName: 'deploy on ${APP_ENV} firebase'
+    npm run deploy:'$(APP_ENV)'
+  displayName: 'deploy on $(APP_ENV) firebase'

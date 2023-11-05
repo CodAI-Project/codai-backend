@@ -18,10 +18,12 @@ steps:
     npm install -g firebase-tools
   displayName: 'npm install dependecies'
 
-
 - script: |
     echo '$(FIREBASE_SERVICE_ACCOUNT_KEY)' > key.json
     export GOOGLE_APPLICATION_CREDENTIALS=$(System.DefaultWorkingDirectory)/key.json
+  displayName: 'setup project firebase'
+
+- script: |
     firebase functions:config:get --project $(APP_ENV) > .runtimeconfig.json
   displayName: 'get runtime'
 

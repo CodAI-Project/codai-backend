@@ -19,19 +19,14 @@ steps:
   displayName: 'NPM Install dependecies'
   
 - script: |
-    firebase experiments:enable webframeworks
-  displayName: 'enabling firebase experiments'
-
-- script: |
     echo '$(FIREBASE_SERVICE_ACCOUNT_KEY)' > key.json
     export GOOGLE_APPLICATION_CREDENTIALS=$(System.DefaultWorkingDirectory)/key.json
   displayName: 'Setup project Firebase'
 
 - script: |
-    npm run import-runtime:$(APP_ENV)
+     echo '$(FIREBASE_RUNTIMECONFIG)' > .runtimeconfig.json
   displayName: 'GET runtimeconfig'
-
 
 - script: |
     npm run deploy:$(APP_ENV)
-  displayName: 'deploy on $(APP_ENV) firebase'
+  displayName: 'Deploy on firebase $(APP_ENV)'

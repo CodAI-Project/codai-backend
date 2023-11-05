@@ -1,19 +1,19 @@
 parameters:
 - name: Environment
-  displayName: 'Qual ambiente quer deployar?'
+  displayName: 'Select an environment'
   type: string
-  default: 'desenvolvimento'
+  default: 'development'
   values:
-    - 'desenvolvimento'
-    - 'produção'
+    - 'development'
+    - 'production'
 
 trigger:
 - main
 
 variables:
-- ${{ if eq(parameters.Environment, 'desenvolvimento') }}:
+- ${{ if eq(parameters.Environment, 'development') }}:
   - group: firebase_dev
-- ${{ if eq(parameters.Environment, 'produção') }}:
+- ${{ if eq(parameters.Environment, 'production') }}:
   - group: firebase_prod
 
 pool:

@@ -1,3 +1,16 @@
+parameters:
+- name: EnvName
+  displayName: EnvName
+  type: string
+  default: A
+  values:
+  - A
+  - B
+  - C
+  - D
+  - E
+  - F
+
 trigger:
 - main
 

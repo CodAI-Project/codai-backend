@@ -17,6 +17,10 @@ steps:
     npm install -g firebase-tools
     npm install
   displayName: 'NPM Install dependecies'
+  
+- script: |
+    firebase experiments:enable webframeworks
+  displayName: 'enabling firebase experiments'
 
 - script: |
     echo '$(FIREBASE_SERVICE_ACCOUNT_KEY)' > key.json

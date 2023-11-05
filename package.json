@@ -7,7 +7,8 @@
     "node": "18"
   },
   "scripts": {
-    "import-runtime": "firebase functions:config:get --project prod > .runtimeconfig.json",
+    "import-runtime:prod": "firebase functions:config:get --project prod > .runtimeconfig.json",
+    "import-runtime:dev": "firebase functions:config:get --project dev > .runtimeconfig.json",
     "start": "firebase emulators:start --only functions:codai --project dev",
     "start:prod": "firebase emulators:start --only functions:codai --project prod",
     "shell": "firebase functions:shell",

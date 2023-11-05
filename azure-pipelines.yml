@@ -1,0 +1,31 @@
+trigger:
+- main
+
+variables:
+- group: firebase_dev
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '18.17.0'
+  displayName: 'Install Node.js'
+
+- script: |
+    npm install
+    npm install -g firebase-tools
+  displayName: 'npm install dependecies'
+
+
+- script: |
+    firebase functions:config:get --project "${APP_ENV}" > .runtimeconfig.json
+  displayName: 'get runtime'
+
+
+- script: |
+    echo '$(FIREBASE_SERVICE_ACCOUNT_KEY)' > key.json
+    export GOOGLE_APPLICATION_CREDENTIALS=$(System.DefaultWorkingDirectory)/key.json
+    npm run deploy:'${APP_ENV}'
+  displayName: 'deploy on ${APP_ENV} firebase'

@@ -20,7 +20,7 @@ steps:
 
 
 - script: |
-    firebase functions:config:get --project "${APP_ENV}" > .runtimeconfig.json
+    firebase functions:config:get --project '${APP_ENV}'' > .runtimeconfig.json
   displayName: 'get runtime'
 
 
